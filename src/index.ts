@@ -116,9 +116,7 @@ export async function sign(payload: JwtPayload, secretKeyId: string, options: Km
   return [token_components.header, token_components.payload, token_components.signature].join('.');
 }
 
-export async function verify(token: string, secretKeyId: string, options: jwt.VerifyOptions & {
-  complete: true;
-}) {
+export async function verify(token: string, secretKeyId: string, options: jwt.VerifyOptions) {
   assert(kms !== undefined, 'KMS instance not configured. Call setKmsInstance before signing');
 
   const certificate = await publicCertificateCache.getValue(secretKeyId);
@@ -126,7 +124,6 @@ export async function verify(token: string, secretKeyId: string, options: jwt.Ve
 };
 
 // This is just exported for verbosity sake - The very nature of decode is that it isn't verifying the signature
-export async function decode(token: string, options: jwt.DecodeOptions & { complete: true;
-}) {
+export async function decode(token: string, options: jwt.DecodeOptions) {
   return jwt.decode(token, options);
 }
