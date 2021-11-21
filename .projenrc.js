@@ -19,9 +19,12 @@ const project = new TypeScriptAppProject({
     'base64url',
     'chalk',
     'dotenv',
+    'prettier',
+    'ms',
   ],
   devDeps: [
-    'aws-sdk',
+    '@types/jsonwebtoken',
+    '@types/ms',
   ],
   gitignore: ['.env'],
   homepage: 'https://github.com/sv-oss/kms-asymmetrical-jwt',
@@ -42,5 +45,5 @@ project.synth();
 function addTsOverride(path, value) {
   project.tsconfig.file.addOverride(path, value);
   project.tsconfigEslint.file.addOverride(path, value);
-  project.tryFindObjectFile('tsconfig.jest.json').addOverride(path, value);
+  project.tryFindObjectFile('tsconfig.dev.json').addOverride(path, value);
 }

@@ -9,7 +9,8 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2019"
+      "es2018",
+      "dom"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -24,7 +25,8 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2019"
+    "target": "ES2019",
+    "useUnknownInCatchVariables": false
   },
   "include": [
     "src/**/*.ts"
