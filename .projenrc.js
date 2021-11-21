@@ -14,16 +14,14 @@ const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'master',
   jest: true,
   deps: [
+    'aws-sdk',
     'jsonwebtoken',
     'base64url',
     'chalk',
     'dotenv',
   ],
-  peerDeps: [
-    'aws-sdk',
-  ],
   devDeps: [
-    '@types/jira-client',
+    'aws-sdk',
   ],
   gitignore: ['.env'],
   homepage: 'https://github.com/sv-oss/kms-asymmetrical-jwt',
