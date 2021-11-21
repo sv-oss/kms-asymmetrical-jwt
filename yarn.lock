@@ -1101,7 +1101,7 @@ at-least-node@^1.0.0:
   resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-aws-sdk@^2.1033.0:
+aws-sdk@^2.0.0:
   version "2.1033.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1033.0.tgz#8bd0084142b15cc2ca427483c36c86b27abc046b"
   integrity sha512-cgcjiuR82bhfBWTffqt6e9+Cn/UgeC6QPQTrlJy3GxwPxChthyrt/h5pekj2l4PLFvETsG10Y6CqQysJEMsncw==
@@ -1932,11 +1932,6 @@ dot-prop@^5.1.0, dot-prop@^5.2.0:
   integrity sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==
   dependencies:
     is-obj "^2.0.0"
-
-dotenv@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
-  integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
 dotgitignore@^2.1.0:
   version "2.1.0"

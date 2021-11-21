@@ -26,6 +26,11 @@
       "type": "build"
     },
     {
+      "name": "aws-sdk",
+      "version": "^2.0.0",
+      "type": "build"
+    },
+    {
       "name": "eslint",
       "type": "build"
     },
@@ -77,19 +82,7 @@
       "type": "build"
     },
     {
-      "name": "aws-sdk",
-      "type": "runtime"
-    },
-    {
       "name": "base64url",
-      "type": "runtime"
-    },
-    {
-      "name": "chalk",
-      "type": "runtime"
-    },
-    {
-      "name": "dotenv",
       "type": "runtime"
     },
     {

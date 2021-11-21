@@ -14,15 +14,13 @@ const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'master',
   jest: true,
   deps: [
-    'aws-sdk',
     'jsonwebtoken',
     'base64url',
-    'chalk',
-    'dotenv',
     'prettier',
     'ms',
   ],
   devDeps: [
+    'aws-sdk@^2.0.0',
     '@types/jsonwebtoken',
     '@types/ms',
   ],
@@ -34,6 +32,8 @@ const project = new TypeScriptAppProject({
 addTsOverride('compilerOptions.lib', ['es2018', 'dom']);
 addTsOverride('compilerOptions.esModuleInterop', true);
 addTsOverride('compilerOptions.useUnknownInCatchVariables', false);
+
+project.package.addField('main', 'lib/index.js');
 
 project.synth();
 
