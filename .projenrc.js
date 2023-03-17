@@ -10,7 +10,7 @@ const project = new TypeScriptAppProject({
   package: true,
   release: true,
   releaseToNpm: true,
-  npmAccess: NpmAccess.PUBLIC,
+  npmRegistryUrl: 'https://npm.pkg.github.com/',
   defaultReleaseBranch: 'master',
   jest: true,
   deps: [
