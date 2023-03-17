@@ -26,6 +26,22 @@ const project = new TypeScriptAppProject({
   ],
   gitignore: ['.env'],
   homepage: 'https://github.com/sv-oss/kms-asymmetrical-jwt',
+  githubOptions: {
+    pullRequestLintOptions: {
+      semanticTitleOptions: {
+        types: [
+          'feat',
+          'fix',
+          'chore',
+          'build',
+          'docs',
+          'refactor',
+          'test',
+          'ci',
+        ],
+      },
+    },
+  },
 });
 
 // add support for dom library in typescript compiler
