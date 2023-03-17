@@ -1,4 +1,4 @@
-const { TypeScriptAppProject, NpmAccess } = require('projen');
+const { TypeScriptAppProject } = require('projen');
 
 const project = new TypeScriptAppProject({
   name: '@sv-oss/kms-asymmetrical-jwt',
