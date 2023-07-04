@@ -13,6 +13,7 @@ const project = new TypeScriptAppProject({
   npmRegistryUrl: 'https://npm.pkg.github.com/',
   defaultReleaseBranch: 'master',
   jest: true,
+  majorVersion: 1,
   deps: [
     'jsonwebtoken',
     'base64url',
@@ -20,8 +21,8 @@ const project = new TypeScriptAppProject({
     'ms',
   ],
   devDeps: [
-    'aws-sdk@^2.0.0',
     '@types/jsonwebtoken',
+    '@aws-sdk/client-kms',
     '@types/ms',
   ],
   gitignore: ['.env'],
