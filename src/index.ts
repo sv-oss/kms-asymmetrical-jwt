@@ -28,7 +28,7 @@ const publicCertificateCache = new Cache(async (KeyId) => {
     throw new Error('No Public Key');
   }
 
-  const pubKey = publicKey.PublicKey.toString();
+  const pubKey = Buffer.from(publicKey.PublicKey!).toString('base64');
 
   const certificate = ['-----BEGIN PUBLIC KEY-----', pubKey, '-----END PUBLIC KEY-----'].join('\n');
   return certificate;
