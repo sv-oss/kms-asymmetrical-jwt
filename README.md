@@ -24,7 +24,7 @@ Example:
 
 ```ts
 import { setKmsInstance, sign, verify } from '@sv-oss/kms-asymmetrical-jwt';
-import { KMS } from 'aws-sdk';
+import { KMS } from '@aws-sdk/kms-client';
 
 const kms = new KMS({ region: 'ap-southeast-2' }); // your options are kept
 

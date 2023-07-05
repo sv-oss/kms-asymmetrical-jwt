@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { GetPublicKeyCommand, KMS, SignCommand } from '@aws-sdk/client-kms';
+import { KMS } from '@aws-sdk/client-kms';
 import base64url from 'base64url';
 import jwt from 'jsonwebtoken';
 
@@ -22,12 +22,7 @@ let kms: KMS;
 export const setKmsInstance = (instance: KMS) => kms = instance;
 
 const publicCertificateCache = new Cache(async (KeyId) => {
-  const publicKey = await kms
-    .send(
-      new GetPublicKeyCommand({
-        KeyId,
-      }),
-    );
+  const publicKey = await kms.getPublicKey({ KeyId });
 
   if (!publicKey.PublicKey) {
     throw new Error('No Public Key');
@@ -104,17 +99,18 @@ export async function sign(payload: JwtPayload, secretKeyId: string, options: Km
     payload: base64url(JSON.stringify(jwtPayload)),
   };
 
-  const res = await kms
-    .send(
-      new SignCommand({
-        Message: Buffer.from(`${token_components.header}.${token_components.payload}`),
-        KeyId: secretKeyId,
-        SigningAlgorithm: options.signingAlgorithm || 'RSASSA_PKCS1_V1_5_SHA_256',
-        MessageType: 'RAW',
-      }),
-    );
+  const res = await kms.sign({
+    Message: Buffer.from(`${token_components.header}.${token_components.payload}`),
+    KeyId: secretKeyId,
+    SigningAlgorithm: options.signingAlgorithm || 'RSASSA_PKCS1_V1_5_SHA_256',
+    MessageType: 'RAW',
+  });
 
-  token_components.signature = res.Signature?.toString().replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  token_components.signature = Buffer.from(res.Signature!)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
 
   return [token_components.header, token_components.payload, token_components.signature].join('.');
 }
