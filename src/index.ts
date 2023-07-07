@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import { KMS } from '@aws-sdk/client-kms';
+import type { KMS } from '@aws-sdk/client-kms';
 import base64url from 'base64url';
 import jwt from 'jsonwebtoken';
 
@@ -12,7 +11,7 @@ type JwtPayload = { [key: string]: any };
 export type KmsAsymSignOptions = Omit<jwt.SignOptions, 'encoding'> & {
   /**
    * The signing algorithm used in the KMS instance
-   * @default "RSASSA_PKCS1_V1_5_SHA_256"
+   * @default "RSASSA_PSS_SHA_512"
    */
   signingAlgorithm?: string;
 }
@@ -48,7 +47,7 @@ export async function sign(payload: JwtPayload, secretKeyId: string, options: Km
   assert(kms !== undefined, 'KMS instance not configured. Call setKmsInstance before signing');
 
   const header = {
-    alg: options.algorithm || 'HS256',
+    alg: options.algorithm || 'PS512',
     typ: 'JWT',
     kid: options.keyid,
     ...options.header,
@@ -84,12 +83,13 @@ export async function sign(payload: JwtPayload, secretKeyId: string, options: Km
   }
 
   Object.entries(optionsToPayload).forEach(([key, claim]) => {
-    // @ts-expect-error
+    // @ts-ignore
     if (options[key] !== 'undefined') {
       if (typeof payload[claim] !== 'undefined') {
         throw new Error('Bad "options.' + key + '" option. The payload already has an "' + claim + '" property.');
       }
-      // @ts-expect-error
+
+      // @ts-ignore
       jwtPayload[claim] = options[key];
     }
   });
@@ -102,7 +102,7 @@ export async function sign(payload: JwtPayload, secretKeyId: string, options: Km
   const res = await kms.sign({
     Message: Buffer.from(`${token_components.header}.${token_components.payload}`),
     KeyId: secretKeyId,
-    SigningAlgorithm: options.signingAlgorithm || 'RSASSA_PKCS1_V1_5_SHA_256',
+    SigningAlgorithm: options.signingAlgorithm || 'RSASSA_PSS_SHA_512',
     MessageType: 'RAW',
   });
 
