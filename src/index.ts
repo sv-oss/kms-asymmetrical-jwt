@@ -1,3 +1,4 @@
+import { createHash } from 'crypto';
 import type { KMS } from '@aws-sdk/client-kms';
 import base64url from 'base64url';
 import jwt from 'jsonwebtoken';
@@ -14,6 +15,18 @@ export type KmsAsymSignOptions = Omit<jwt.SignOptions, 'encoding'> & {
    * @default "RSASSA_PSS_SHA_512"
    */
   signingAlgorithm?: string;
+  /**
+   * The digest algorithm used in KMS
+   *
+   * Digest is automatically used for messages over 4096 characters long
+   *
+   * The value should align to your signing algorihtm.
+   *
+   * If you change signing algorithm, it is recommended you change digestAlgorithm too.
+   *
+   * @default "sha512" -> This is to align to the signingAlgorithm default.
+   */
+  digestAlgorithm?: string;
 }
 
 let kms: KMS;
@@ -99,11 +112,17 @@ export async function sign(payload: JwtPayload, secretKeyId: string, options: Km
     payload: base64url(JSON.stringify(jwtPayload)),
   };
 
+  const rawMessage = `${token_components.header}.${token_components.payload}`;
+
+  const messageType = rawMessage.length > 4096 ? 'DIGEST' : 'RAW';
+
   const res = await kms.sign({
-    Message: Buffer.from(`${token_components.header}.${token_components.payload}`),
+    Message: messageType === 'DIGEST' ?
+      createHash(options.digestAlgorithm || 'sha512').update(rawMessage).digest() :
+      Buffer.from(rawMessage),
     KeyId: secretKeyId,
     SigningAlgorithm: options.signingAlgorithm || 'RSASSA_PSS_SHA_512',
-    MessageType: 'RAW',
+    MessageType: messageType,
   });
 
   token_components.signature = Buffer.from(res.Signature!)
@@ -120,7 +139,7 @@ export async function verify(token: string, secretKeyId: string, options?: jwt.V
 
   const certificate = await publicCertificateCache.getValue(secretKeyId);
   return jwt.verify(token, certificate, options);
-};
+}
 
 // This is just exported for verbosity sake - The very nature of decode is that it isn't verifying the signature
 export async function decode(token: string, options?: jwt.DecodeOptions) {
