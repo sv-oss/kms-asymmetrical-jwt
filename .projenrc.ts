@@ -1,9 +1,10 @@
-const { TypeScriptAppProject } = require('projen');
+import { typescript } from 'projen';
+import { NodePackageManager } from 'projen/lib/javascript';
 
-const project = new TypeScriptAppProject({
+const project = new typescript.TypeScriptAppProject({
   name: '@sv-oss/kms-asymmetrical-jwt',
   description: 'A signing/verifying wrapper for jsonwebtoken integrated directly with KMS',
-  repositoryUrl: 'https://github.com/sv-oss/kms-asymmetrical-jwt',
+  repository: 'https://github.com/sv-oss/kms-asymmetrical-jwt',
   authorName: 'Service Victoria',
   authorEmail: 'platform@service.vic.gov.au',
   license: 'MIT',
@@ -12,8 +13,10 @@ const project = new TypeScriptAppProject({
   releaseToNpm: true,
   npmRegistryUrl: 'https://npm.pkg.github.com/',
   defaultReleaseBranch: 'master',
+  packageManager: NodePackageManager.NPM,
   jest: true,
   majorVersion: 1,
+  projenrcTs: true,
   deps: [
     'jsonwebtoken',
     'base64url',
@@ -59,8 +62,8 @@ project.synth();
  * @param {string} path - The path to override
  * @param {*} value - The new overridden value
  */
-function addTsOverride(path, value) {
-  project.tsconfig.file.addOverride(path, value);
-  project.tsconfigEslint.file.addOverride(path, value);
-  project.tryFindObjectFile('tsconfig.dev.json').addOverride(path, value);
+function addTsOverride(path: string, value: any) {
+  project.tsconfig!.file.addOverride(path, value);
+  project.tsconfigEslint!.file.addOverride(path, value);
+  project.tryFindObjectFile('tsconfig.dev.json')!.addOverride(path, value);
 }
