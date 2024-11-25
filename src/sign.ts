@@ -1,4 +1,5 @@
 import { createHash } from 'crypto';
+import type { SigningAlgorithmSpec } from '@aws-sdk/client-kms';
 import base64url from 'base64url';
 import type { SignOptions } from 'jsonwebtoken';
 import { KmsClient } from './kms';
@@ -22,7 +23,7 @@ export type KmsAsymSignOptions = Omit<SignOptions, 'encoding'> & {
    * The signing algorithm used in the KMS instance
    * @default "RSASSA_PSS_SHA_512"
    */
-  signingAlgorithm?: string;
+  signingAlgorithm?: SigningAlgorithmSpec;
 
   /**
    * The digest algorithm used in KMS
