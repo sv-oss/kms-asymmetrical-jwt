@@ -31,6 +31,7 @@ const project = new typescript.TypeScriptAppProject({
   gitignore: ['.env'],
   homepage: 'https://github.com/sv-oss/kms-asymmetrical-jwt',
   githubOptions: {
+    mergify: false,
     pullRequestLintOptions: {
       semanticTitleOptions: {
         types: [
